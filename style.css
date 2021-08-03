@@ -1,0 +1,59 @@
+/* ここからCSSを記述してください。 */
+.item-box{
+    margin: 0.5em 4;
+    padding: 0.5em 0;
+    border: solid 2px white;
+    background: #1A4567;
+    color: white;
+
+}
+
+.item-img-50px{
+    height: 50px;
+    width: 50px;
+}
+.item-img-100px{
+    height: 100px;
+    width: 100px;
+}
+
+.burgerImg{
+    height: 200px;
+    width: 200px;
+}
+
+.item-cards{
+    height: 25em;
+}
+
+
+/* .button {
+} */
+.button:hover{
+    opacity:0.6;
+}
+
+.burgerImg:active {
+
+    position: relative;
+    top: 3px;
+}
+
+
+.pointer {
+    animation-name: up-down;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-duration: 1s;
+}
+
+@keyframes up-down {
+    0% {
+        transform: translate(0,0px);
+    }
+
+    100% {
+        transform: translate(0,-15px)
+    }
+}
