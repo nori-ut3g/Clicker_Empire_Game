@@ -904,6 +904,7 @@ class Render{
         let targetDiv = document.getElementById("main-page-div");
         let saveFileList = SaveData.loadFromLocalStrage();
         targetDiv.innerHTML = ""
+        // targetDiv.classList.add("d-flex", "justify-content-around")
 
         let saveFileListDiv = document.createElement("div")
         saveFileListDiv.classList.add("text-white", "overflow-auto", "column", "col-8","bg-secondary", "item-cards");
@@ -1244,7 +1245,7 @@ class Render{
     static createLoginPage(){
         let mainPageDiv = document.getElementById("main-page-div");
         mainPageDiv.innerHTML=``;
-        mainPageDiv.classList.add("d-flex", "justify-content-around");
+        mainPageDiv.classList.add("d-flex", "align-items-center");
 
         let loginDiv = document.createElement("div")
         loginDiv.innerHTML = `
@@ -1252,7 +1253,6 @@ class Render{
                 <div class="col-md-6 col-12 my-2">
                     <button id="newgame-btn" class="btn btn-primary btn-block" >NewGame</button>
                 </div>
-
                 <div class="col-md-6 col-12 my-2">
                     <button id="load-local-storage-btn" class="btn btn-success btn-block" >LoadGame</button>
                 </div>
@@ -1264,7 +1264,6 @@ class Render{
         Render.addEventLoadLocalStorageBtn();
     }
 
-
     static createMainPage(name, saveData){
         let game = new Controller();
         if(saveData){
@@ -1273,21 +1272,39 @@ class Render{
             game.setUser(name);
             game.timeStart();
         }
+
+        // let mainPageDiv = document.getElementById("main-page-div");
+        // mainPageDiv.innerHTML = ``;
+        // mainPageDiv.className = ``;
+        // mainPageDiv.classList.add("d-flex", "justify-content-around");
+        //
+        // mainPageDiv.append(Render.createLeftSideDiv());
+        // mainPageDiv.append(Render.createRightSideDiv());
+        //
+        // Render.createHamburgerInfoBoadDiv(game)
+        // Render.createHamburgerButton(game)
+        //
+        // Render.createUserInfoBoard(game);
+        // Render.createItemTable(game);
+        // Render.createSaveBtn(game);
+
         let mainPageDiv = document.getElementById("main-page-div");
         mainPageDiv.innerHTML = ``;
-        mainPageDiv.className = ``;
+        mainPageDiv.classList.add("d-flex", "align-items-center");
+        let gameDiv = document.createElement("div");
+        gameDiv.classList.add("d-flex", "justify-content-around");
 
-        mainPageDiv.classList.add("d-flex", "justify-content-around");
-
-        mainPageDiv.append(Render.createLeftSideDiv());
-        mainPageDiv.append(Render.createRightSideDiv());
+        gameDiv.append(Render.createLeftSideDiv())
+        gameDiv.append(Render.createRightSideDiv())
+        mainPageDiv.append(gameDiv)
 
         Render.createHamburgerInfoBoadDiv(game)
         Render.createHamburgerButton(game)
-
         Render.createUserInfoBoard(game);
         Render.createItemTable(game);
         Render.createSaveBtn(game);
+
+        mainPageDiv.append(gameDiv)
 
     }
 
