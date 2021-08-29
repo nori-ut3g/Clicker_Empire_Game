@@ -1061,7 +1061,7 @@ class Render{
                                 <span id="item-sum-${item.itemName}">${tmpString}</span>
                             </div>                    
                             <div class="col-6 bg-dark">
-                                <span id="price-${item.itemName}">${Tools.convertDigits(item.unitPrice)}</span>
+                                <span id="price-${item.itemName}">${Tools.convertDigits(item.unitPrice)}円</span>
                             </div>
                             <div class="col-6 bg-dark">
                                 <span id="earnMoney-${item.itemName}">${item.getItemType() == "Ability" || item.getItemType() == "TempItem"? "" : Tools.convertDigits(item.earnMoney())+"円/日" }</span>
@@ -1124,13 +1124,49 @@ class Render{
         userNameSpan.innerHTML = user.getUserName();
         getDailyAllowanceSpan.innerHTML = Tools.convertDigits(user.getDailyAllowanceNum());
 
+        // Render.refreshPurchaseButton(user);
+
     }
+
+    static refreshPurchaseButton(user){
+        let itemAndAbilityList = user.getAbilitiesAndItemsData();
+
+        for(let i=0 ; i<itemAndAbilityList.length; i++) {
+            let item = itemAndAbilityList[i];
+            let purchaseButton = document.getElementById("purchase-button-"+item.itemName);
+            if(purchaseButton === null) continue;
+            if(item.getItemUnitPrice() > user.getUserMoney() || item.getItemQuantity() >= item.getItemMaxQuantity()){
+                if( purchaseButton.classList.contains('bg-success'))purchaseButton.classList.remove('bg-success');
+                purchaseButton.classList.add("bg-danger")
+                purchaseButton.innerHTML = `不`;
+            }else{
+                if( purchaseButton.classList.contains('bg-danger'))purchaseButton.classList.remove('bg-danger');
+
+                purchaseButton.classList.add('bg-success')
+                purchaseButton.innerHTML = `買`;
+            }
+        }    }
 
     static refreshEveryClick(user){
         let userMoneySpan = document.getElementById("user-money");
         userMoneySpan.innerHTML = Tools.convertDigits(user.getUserMoney());
         let clickCounterSpan = document.getElementById("user-clickCounter");
         clickCounterSpan.innerHTML = user.getClickCounter();
+
+        let itemAndAbilityList = user.getAbilitiesAndItemsData();
+        for(let i=0 ; i<itemAndAbilityList.length; i++) {
+            let item = itemAndAbilityList[i];
+            let purchaseButton = document.getElementById("purchase-button-"+item.itemName);
+            if(item.getItemUnitPrice() > user.getUserMoney() || item.getItemQuantity() >= item.getItemMaxQuantity()){
+                purchaseButton.classList.remove('bg-success');
+                purchaseButton.classList.add("bg-danger")
+                purchaseButton.innerHTML = `不`;
+            }else{
+                purchaseButton.classList.remove('bg-danger');
+                purchaseButton.classList.add('bg-success')
+                purchaseButton.innerHTML = `買`;
+            }
+        }
     }
 
     static refreshEveryPurchaseItem(user, itemName){
@@ -1150,11 +1186,11 @@ class Render{
         let userItemStockSumSpan = document.getElementById("item-sum-"+item.itemName);
         userItemStockSumSpan.innerHTML = tmpString;
         let userItemUnitPrice = document.getElementById("price-"+item.itemName);
-        userItemUnitPrice.innerHTML = Tools.convertDigits(item.unitPrice);
+        userItemUnitPrice.innerHTML = `${Tools.convertDigits(item.unitPrice)}円`;
         // }
         if(item.getClassName() !== "Ability" && item.getClassName() !== "TempItem"){
             let userItemProfitSpan = document.getElementById("earnMoney-"+item.itemName);
-            userItemProfitSpan.innerHTML = `${Tools.convertDigits(item.earnMoney())}/日`
+            userItemProfitSpan.innerHTML = `${Tools.convertDigits(item.earnMoney())}円/日`
         }else{
 
         }
@@ -1164,6 +1200,8 @@ class Render{
             hamburgerNameSpan.innerHTML = user.hamburger.getItemName();
 
         }
+        Render.refreshPurchaseButton(user);
+
 
     }
 
@@ -1215,7 +1253,7 @@ class Render{
                     <button id="newgame-btn" class="btn btn-primary btn-block" >NewGame</button>
                 </div>
 
-                <div class="col-6 col-12 my-2">
+                <div class="col-md-6 col-12 my-2">
                     <button id="load-local-storage-btn" class="btn btn-success btn-block" >LoadGame</button>
                 </div>
             </div>
