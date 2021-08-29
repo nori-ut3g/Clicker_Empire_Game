@@ -1273,26 +1273,11 @@ class Render{
             game.timeStart();
         }
 
-        // let mainPageDiv = document.getElementById("main-page-div");
-        // mainPageDiv.innerHTML = ``;
-        // mainPageDiv.className = ``;
-        // mainPageDiv.classList.add("d-flex", "justify-content-around");
-        //
-        // mainPageDiv.append(Render.createLeftSideDiv());
-        // mainPageDiv.append(Render.createRightSideDiv());
-        //
-        // Render.createHamburgerInfoBoadDiv(game)
-        // Render.createHamburgerButton(game)
-        //
-        // Render.createUserInfoBoard(game);
-        // Render.createItemTable(game);
-        // Render.createSaveBtn(game);
-
         let mainPageDiv = document.getElementById("main-page-div");
         mainPageDiv.innerHTML = ``;
         mainPageDiv.classList.add("d-flex", "align-items-center");
         let gameDiv = document.createElement("div");
-        gameDiv.classList.add("d-flex", "justify-content-around");
+        gameDiv.classList.add("d-flex", "justify-content-around", "col-10");
 
         gameDiv.append(Render.createLeftSideDiv())
         gameDiv.append(Render.createRightSideDiv())
